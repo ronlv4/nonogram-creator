@@ -1,11 +1,13 @@
 import React from 'react'
 
-function Square (){
-    return(
-        <div>
-            <h1>check</h1>
-        </div>
-    )
+class Square extends React.Component{
+    render(){
+        return(
+            <button
+                className="square">
+            </button>
+        )
+    }
 }
 
 export default Square
