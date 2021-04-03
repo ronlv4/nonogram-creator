@@ -21,7 +21,7 @@ const createEmptyGrid = ()=>{
 const createRandomizedGrid = ()=>{
   const rows=[]
       for(let i=0;i<numOfRows;i++){
-        rows.push(Array.from(Array(numOfCols),()=> Math.random()>0.99? 1 : 0))
+        rows.push(Array.from(Array(numOfCols),()=> Math.random()>0.7? 1 : 0))
       }
       return rows;
 }
@@ -33,32 +33,39 @@ const createRandomizedGrid = ()=>{
       <div>
         <button
         onClick={()=>{setgrid(createRandomizedGrid())}}>
-          randomize grid
+          Randomize Grid
         </button>
         <button
         onClick={()=>{setgrid(createEmptyGrid())}}>
           Clear Grid
         </button>
-
+        {()=> <button>sadas</button>}
         <div style = {{
           display: 'grid',
+          alignSelf: 'center',
           gridTemplateColumns: `repeat(${numOfCols}, 20px)`
         }}>
           {grid.map((rows, i) =>
             rows.map((col, k) => (
               <div
                 key={`${i}-${k}`}
+                // onMouseDownCapture = {(e)=>{
+                //     const newGrid = produce(grid, gridCopy =>{
+                //       gridCopy[i][k] = 1-grid[i][k];
+                //     })
+                //     setgrid(newGrid)
+                // }}
                 onMouseEnter={(e)=>{
                   if(e.buttons===1){
                     const newGrid = produce(grid, gridCopy =>{
-                      gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                      gridCopy[i][k] = 1-grid[i][k];
                     })
                     setgrid(newGrid)
                   }
                 }}
-                onClick={() => {
+                onMouseDown={() => {
                   const newGrid = produce(grid, gridCopy =>{
-                    gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                    gridCopy[i][k] = 1-grid[i][k];
                   })
                   setgrid(newGrid)
                 }}
@@ -74,19 +81,6 @@ const createRandomizedGrid = ()=>{
         </div>
       </div>
     )
-
-  // props: AppProps = {
-  //   numOfRows: 10,
-  //   numOfCols: 15
-  // }
-  // state: AppState = {
-  //   number: 5
-  // }
-
-	// state: AppState = {
-	// 	board: [<BigSquare/>,<BigSquare/>,<BigSquare/>]
-	// }
-
 }
 
 export default App;
