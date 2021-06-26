@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import produce from 'immer';
+import Button from "./components/Button"
 
 
   const numOfRows = 30
@@ -29,17 +30,26 @@ const createRandomizedGrid = ()=>{
 // export class App extends React.PureComponent<{}, AppState> {
   const App: React.FC = () =>{
     const [grid,setgrid] = useState(()=>{return createEmptyGrid()})
+    const [isDrawing,setIsDrawing] = useState(true)
+    const [drawingMode, setDrawingMode] = useState(() => {return "free"})
     return(
       <div>
-        <button
-        onClick={()=>{setgrid(createRandomizedGrid())}}>
-          Randomize Grid
-        </button>
-        <button
-        onClick={()=>{setgrid(createEmptyGrid())}}>
-          Clear Grid
-        </button>
-        {()=> <button>sadas</button>}
+        <Button
+          onClick={()=>{setgrid(createRandomizedGrid())}}> Randomize Grid
+        </Button>
+        <Button
+          onClick={()=>{setgrid(createEmptyGrid())}}> Clear Grid
+        </Button>
+        <Button
+          onClick={()=>{setDrawingMode(() =>{
+            if (drawingMode === "free"){
+              return "straight"
+            }
+            else{
+              return "free"
+            }
+          })}}> Straigt line mode
+        </Button>
         <div style = {{
           display: 'grid',
           alignSelf: 'center',
@@ -55,12 +65,15 @@ const createRandomizedGrid = ()=>{
                 //     })
                 //     setgrid(newGrid)
                 // }}
+
                 onMouseEnter={(e)=>{
-                  if(e.buttons===1){
-                    const newGrid = produce(grid, gridCopy =>{
-                      gridCopy[i][k] = 1-grid[i][k];
-                    })
-                    setgrid(newGrid)
+                  if (drawingMode === "free"){
+                    if(e.buttons===1){
+                      const newGrid = produce(grid, gridCopy =>{
+                        gridCopy[i][k] = 1-grid[i][k];
+                      })
+                      setgrid(newGrid)
+                    }
                   }
                 }}
                 onMouseDown={() => {
