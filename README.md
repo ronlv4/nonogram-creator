@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a nonogram-creator. in this grid you can draw your own nonogram board.
 
 ## Available Scripts
 
